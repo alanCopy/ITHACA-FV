@@ -14,34 +14,33 @@ namespace ITHACAPOD
 class MeshConfiguration
 {
 public:
-    MeshConfiguration() : m_mesh(nullptr), m_submesh(nullptr), m_nCells(0),
-                          m_volume(nullptr), m_totalVolume(0.0), 
-                          m_delta(nullptr){}
+    MeshConfiguration() : m_submesh(nullptr), m_nCells(0),
+                          m_totalVolume(0.0) {}
 
-    Foam::fvMesh& get_mesh() const { return *m_mesh; }
+    Foam::fvMesh& get_mesh()  { return m_mesh(); }
     const Foam::label& get_nCells() const { return m_nCells; }
     const Foam::fvMesh& get_submesh() const { return *m_submesh; }
     
-    Foam::volScalarField& get_volume() const { return *m_volume; }
+    Foam::volScalarField& get_volume() { return m_volume(); }
     const double& get_totalVolume() const { return m_totalVolume; }
-    const Foam::volScalarField& get_delta() const { return *m_delta; }
+    const Foam::volScalarField& get_delta() const { return m_delta(); }
     const Foam::volScalarField& get_magicDelta() const { return *m_magicDelta; }
     
-    void set_mesh(Foam::fvMesh* m) { m_mesh = m; }
-    void set_nCells(Foam::label n) { m_nCells = n; }
+    void set_mesh(Foam::fvMesh* m) { m_mesh.reset(m); }
+    void set_nCells(Foam::label n) { m_nCells =n; }
     void set_submesh(Foam::fvMesh& s) { m_submesh = &s; }
-    void set_volume(Foam::volScalarField* v) { m_volume = v; }
+    void set_volume(Foam::volScalarField* v) { m_volume.reset(v); }
     void set_totalVolume(double tv) { m_totalVolume = tv; }
-    void set_delta(Foam::volScalarField* d) { m_delta = d; }
+    void set_delta(Foam::volScalarField* d) { m_delta.reset(d); }
     void set_magicDelta(const Foam::volScalarField& mD);
 
 private:
-    Foam::fvMesh* m_mesh;
-    Foam::fvMesh* m_submesh;
+    Foam::autoPtr<Foam::fvMesh> m_mesh;
+    Foam::fvMesh* m_submesh; //not owning
     Foam::label m_nCells;
-    Foam::volScalarField* m_volume;
+    Foam::autoPtr<Foam::volScalarField> m_volume;
     double m_totalVolume;
-    Foam::volScalarField* m_delta;
+    Foam::autoPtr<Foam::volScalarField> m_delta;
     Foam::autoPtr<Foam::volScalarField> m_magicDelta;
 };
 }

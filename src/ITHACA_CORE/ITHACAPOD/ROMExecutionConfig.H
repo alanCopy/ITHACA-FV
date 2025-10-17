@@ -27,9 +27,6 @@ enum class PressureResolutionKind {
 class ROMExecutionConfig
 {
 public:
-    ROMExecutionConfig():
-        m_nu(nullptr) { }
-
     // Temporal scheme
     const Foam::word& ROMTemporalScheme() const { return m_ROMTemporalScheme; }
     void setROMTemporalScheme(const Foam::word& scheme);
@@ -39,8 +36,8 @@ public:
     void setPressureResolutionKind(PressureResolutionKind kind);
 
     // Physical properties
-    const Foam::dimensionedScalar& nu() const { return *m_nu; }
-    void setNu(Foam::dimensionedScalar* nu) { m_nu = nu; }
+    const Foam::dimensionedScalar& nu() const { return m_nu(); }
+    void setNu(Foam::dimensionedScalar* nu) { m_nu.reset(nu); }
 
     // Mean field
     const Foam::volVectorField* meanU() const { return m_meanU; }
@@ -66,7 +63,7 @@ private:
     Foam::word m_ROMTemporalScheme;
     PressureResolutionKind m_pressureResolutionKind;
 
-    Foam::dimensionedScalar* m_nu;
+    Foam::autoPtr<Foam::dimensionedScalar> m_nu;
     Foam::autoPtr<Foam::volVectorField> m_meanU;
 
     // Hyper-reduction settings
