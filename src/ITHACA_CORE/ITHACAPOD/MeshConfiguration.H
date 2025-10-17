@@ -16,7 +16,7 @@ class MeshConfiguration
 public:
     MeshConfiguration() : m_mesh(nullptr), m_submesh(nullptr), m_nCells(0),
                           m_volume(nullptr), m_totalVolume(0.0), 
-                          m_delta(nullptr), m_magicDelta(nullptr) {}
+                          m_delta(nullptr){}
 
     Foam::fvMesh& get_mesh() const { return *m_mesh; }
     const Foam::label& get_nCells() const { return m_nCells; }
@@ -42,7 +42,7 @@ private:
     Foam::volScalarField* m_volume;
     double m_totalVolume;
     Foam::volScalarField* m_delta;
-    Foam::volScalarField* m_magicDelta;
+    Foam::autoPtr<Foam::volScalarField> m_magicDelta;
 };
 }
 #endif // MESHPARAMETERS_H

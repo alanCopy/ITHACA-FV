@@ -1,4 +1,5 @@
 #pragma once
+#include "autoPtr.H"
 #ifndef DEIMConfiguration_H
 #define DEIMConfiguration_H
 
@@ -22,9 +23,7 @@ class DEIMConfiguration
 {
 public:
     DEIMConfiguration():
-        m_nMagicPoints(0), m_Ck(0.0), m_Ce(0.0),
-        m_meanVectorDEIM(nullptr), m_meanScalarDEIM(nullptr),
-        m_meanVectorDEIMMagic(nullptr), m_meanScalarDEIMMagic(nullptr) { };
+        m_nMagicPoints(0), m_Ck(0.0), m_Ce(0.0) { };
 
     // Magic points
     const Foam::label& nMagicPoints() const { return m_nMagicPoints; }
@@ -121,10 +120,10 @@ private:
     Eigen::Tensor<double, 3> m_M_xiOnMagicPts;
 
     // Mean fields
-    Foam::volVectorField* m_meanVectorDEIM;
-    Foam::volScalarField* m_meanScalarDEIM;
-    Foam::volVectorField* m_meanVectorDEIMMagic;
-    Foam::volScalarField* m_meanScalarDEIMMagic;
+    Foam::autoPtr<Foam::volVectorField> m_meanVectorDEIM;
+    Foam::autoPtr<Foam::volScalarField> m_meanScalarDEIM;
+    Foam::autoPtr<Foam::volVectorField> m_meanVectorDEIMMagic;
+    Foam::autoPtr<Foam::volScalarField> m_meanScalarDEIMMagic;
 };
 
 } // namespace ITHACAPOD

@@ -14,7 +14,7 @@ class FieldTemplates
 public:
     FieldTemplates() : m_U(nullptr), m_p(nullptr),
                        m_nut(nullptr), m_omega(nullptr),
-                       m_k(nullptr), m_fullStressFunction(nullptr) {}
+                       m_k(nullptr){}
 
     const Foam::volVectorField& get_U() const { return *m_U; }
     const Foam::volScalarField& get_p() const { return *m_p; }
@@ -37,7 +37,7 @@ private:
     Foam::volScalarField* m_nut;
     Foam::volScalarField* m_omega;
     Foam::volScalarField* m_k;
-    Foam::volVectorField* m_fullStressFunction;
+    Foam::autoPtr<Foam::volVectorField> m_fullStressFunction;
 };
 }
 #endif // MESHPARAMETERS_H

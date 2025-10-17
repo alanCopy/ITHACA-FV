@@ -28,7 +28,7 @@ class ROMExecutionConfig
 {
 public:
     ROMExecutionConfig():
-        m_nu(nullptr), m_meanU(nullptr), m_deltaWeight(nullptr) { }
+        m_nu(nullptr) { }
 
     // Temporal scheme
     const Foam::word& ROMTemporalScheme() const { return m_ROMTemporalScheme; }
@@ -59,7 +59,7 @@ public:
     void setUseSOTA(const Foam::word& sota) { m_useSOTA = sota; }
 
     // Delta weight for hyper-reduction
-    const Eigen::VectorXd* deltaWeight() const { return m_deltaWeight; }
+    const Eigen::VectorXd* deltaWeight() const { return m_deltaWeight.get(); }
     void setDeltaWeight(const Eigen::VectorXd& dw);
 
 private:
@@ -67,7 +67,7 @@ private:
     PressureResolutionKind m_pressureResolutionKind;
 
     Foam::dimensionedScalar* m_nu;
-    Foam::volVectorField* m_meanU;
+    Foam::autoPtr<Foam::volVectorField> m_meanU;
 
     // Hyper-reduction settings
     Foam::word m_HRInterpolatedField;
@@ -75,7 +75,7 @@ private:
     Foam::word m_ECPAlgo;
     Foam::word m_useSOTA;
 
-    Eigen::VectorXd* m_deltaWeight;
+    std::unique_ptr<Eigen::VectorXd> m_deltaWeight;
 };
 
 

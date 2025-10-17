@@ -4,7 +4,7 @@
 
 void ITHACAPOD::ROMExecutionConfig::setDeltaWeight(const Eigen::VectorXd& dw)
 {
-    m_deltaWeight = new Eigen::VectorXd(dw);
+    m_deltaWeight = std::make_unique<Eigen::VectorXd>(dw);
 }
 
 void ITHACAPOD::ROMExecutionConfig::setROMTemporalScheme(const Foam::word& scheme)
@@ -19,5 +19,5 @@ void ITHACAPOD::ROMExecutionConfig::setPressureResolutionKind(PressureResolution
 
 void ITHACAPOD::ROMExecutionConfig::setMeanU(const Foam::volVectorField& mean)
 {
-    m_meanU = new Foam::volVectorField(mean);
+    m_meanU = Foam::autoPtr(new Foam::volVectorField(mean));
 }

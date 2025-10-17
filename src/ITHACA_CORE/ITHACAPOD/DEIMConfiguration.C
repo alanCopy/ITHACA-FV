@@ -41,20 +41,20 @@ void ITHACAPOD::DEIMConfiguration::setDeformationTensorOnMagicPoints(Foam::PtrLi
 
 void ITHACAPOD::DEIMConfiguration::setMeanVectorDEIM(const Foam::volVectorField& mean)
 {
-    m_meanVectorDEIM = new Foam::volVectorField(mean);
+    m_meanVectorDEIM = Foam::autoPtr(new Foam::volVectorField(mean));
 }
 
 void ITHACAPOD::DEIMConfiguration::setMeanScalarDEIM(const Foam::volScalarField& mean)
 {
-    m_meanScalarDEIM = new Foam::volScalarField(mean);
+    m_meanScalarDEIM = Foam::autoPtr(new Foam::volScalarField(mean));
 }
 
 void ITHACAPOD::DEIMConfiguration::setMeanVectorDEIMMagic(const Foam::volVectorField& mean)
 {
-    m_meanVectorDEIMMagic = new Foam::volVectorField(mean);
+    m_meanVectorDEIMMagic = Foam::autoPtr(new Foam::volVectorField(mean));
 }
 
 void ITHACAPOD::DEIMConfiguration::setMeanScalarDEIMMagic(const Foam::volScalarField& mean)
 {
-    m_meanScalarDEIMMagic = new Foam::volScalarField(mean);
+    m_meanScalarDEIMMagic = Foam::autoPtr(new Foam::volScalarField(mean));
 }
